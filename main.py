@@ -5,30 +5,25 @@ from discord import app_commands
 from datetime import datetime, timezone
 import asyncio
 
-TOKEN = 'Your token' 
-OWNER_ID = 697047593334603837
-SERVER_ID = 1208706536684130354
-ROLE_ID = 1256972069103734865
+TOKEN = 'Your Bot Token ;)' 
+OWNER_ID = 697047593334603837 # Change to your id 
+SERVER_ID = 1208706536684130354 # Change to the server your gonna use the bot in (I'ma update the code soon to work better)
+ROLE_ID = 1256972069103734865 # Your staff role 
 
-CHANNEL_ID_PET_SIM = 1270334660957700139
-CHANNEL_ID_BEE_SWARM = 1270423327139434506
+CHANNEL_ID_PET_SIM = 1270334660957700139 # Change to your channel to update the ps99 stats
 GAME_UNIVERSE_ID_PET_SIM = 3317771874
-GAME_UNIVERSE_ID_BEE_SWARM = 601130232
 
 API_URL_PET_SIM = f"https://games.roblox.com/v1/games?universeIds={GAME_UNIVERSE_ID_PET_SIM}"
-API_URL_BEE_SWARM = f"https://games.roblox.com/v1/games?universeIds={GAME_UNIVERSE_ID_BEE_SWARM}"
 POINTS_API_URL = 'https://biggamesapi.io/api/clans?page=1&pageSize=10&sort=Points&sortOrder=desc'
 DIAMONDS_API_URL = 'https://biggamesapi.io/api/clans?page=1&pageSize=10&sort=DepositedDiamonds&sortOrder=desc'
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix='/', intents=intents)
+bot = commands.Bot(command_prefix=':', intents=intents)
 
 start_time = datetime.now(timezone.utc)
 
 update_message_id_ps99 = None
 stats_message_id_ps99 = None
-update_message_id_beeswarm = None
-stats_message_id_beeswarm = None
 
 COUNTRY_DATA = {
     "AF": ("Afghanistan", "🇦🇫"),
@@ -397,14 +392,13 @@ async def kick(interaction: discord.Interaction, member: discord.Member, reason:
 
 @bot.tree.command(name="ping", description="Get the bot's latency.")
 async def ping(interaction: discord.Interaction):
-    bot_ping = round(bot.latency * 1000) 
+    bot_ping = round(bot.latency * 1000)
 
     await interaction.response.send_message(embed=discord.Embed(
         title="🏓 Pong!",
         description=f"**Bot Latency:** {bot_ping}ms",
         color=discord.Color.blue()
     ))
-
 
 @bot.tree.command(name="avatar", description="Get a user's avatar.")
 async def avatar(interaction: discord.Interaction, member: discord.Member = None):
@@ -426,25 +420,26 @@ async def clear(interaction: discord.Interaction, amount: int):
         has_permission = role in interaction.user.roles
 
     if not has_permission:
-        await interaction.response.send_message('You do not have the required role or permission to use this command.', ephemeral=True)
+        await interaction.response.send_message('You do not have the required role or permission to use this command.\n-# Made By Mee69_2  TYSM!', ephemeral=True)
         return
 
     if amount < 1:
-        await interaction.response.send_message('Please specify a number greater than 0.', ephemeral=True)
+        await interaction.response.send_message('Please specify a number greater than 0.\n-# Made By Mee69_2  TYSM!', ephemeral=True)
         return
 
-    await interaction.response.send_message('Deleting messages...', ephemeral=True)
+    await interaction.response.send_message('Deleting messages...\n-# Made By Mee69_2  TYSM!', ephemeral=True)
 
     try:
         deleted = await interaction.channel.purge(limit=amount + 1)
-        confirmation_message = await interaction.followup.send(f'Deleted {len(deleted) - 1} messages.', ephemeral=True)
+        confirmation_message = await interaction.followup.send(f'Deleted {len(deleted) - 1} messages.\n-# Made By Mee69_2  TYSM!', ephemeral=True)
         await confirmation_message.delete(delay=30)
     except discord.Forbidden:
-        error_message = await interaction.followup.send('I do not have permissions to delete messages in this channel.', ephemeral=True)
+        error_message = await interaction.followup.send('I do not have permissions to delete messages in this channel.\n-# Made By Mee69_2  TYSM!', ephemeral=True)
         await error_message.delete(delay=30)
     except discord.HTTPException as e:
-        error_message = await interaction.followup.send(f'Failed to delete messages: {str(e)}', ephemeral=True)
+        error_message = await interaction.followup.send(f'Failed to delete messages: {str(e)}\n-# Made By Mee69_2  TYSM!', ephemeral=True)
         await error_message.delete(delay=30)
+
 
 @bot.tree.command(name="slowmode", description="Set the slowmode for the current channel.")
 async def slowmode(interaction: discord.Interaction, seconds: int):
@@ -568,8 +563,9 @@ async def best_clans(interaction: discord.Interaction, sort_by: app_commands.Cho
             f"🌍 Country: {country_name} {country_emoji}\n"
         )
         embed.add_field(name=f"Place: #{index}", value=description, inline=False)
+
     await interaction.followup.send(embed=embed)
-    
+
 async def fetch_top_clans(url):
     try:
         response = requests.get(url)
@@ -598,28 +594,19 @@ async def initial_check(channel, api_url, game_name):
             stats_message_content = f"# Pet Simulator Stats\n🎮 **Players**: {og_player_count:,}\n⭐ **Favorites**: {last_favorite_count:,}\n➡️ **Visits**: {last_visit_count:,}"
             update_message_content = f"🆕  **Pet Simulator Update Info**\n⌛ **Last update**: {relative_time}\n📅 **Date**: {formatted_time}"
             global stats_message_id_ps99, update_message_id_ps99
-        elif game_name == "Bee Swarm Simulator":
-            stats_message_content = f"# Bee Swarm Simulator Stats\n🎮 **Players**: {og_player_count:,}\n⭐ **Favorites**: {last_favorite_count:,}\n➡️ **Visits**: {last_visit_count:,}"
-            update_message_content = f"🆕  **Bee Swarm Simulator Update Info**\n⌛ **Last update**: {relative_time}\n📅 **Date**: {formatted_time}"
-            global stats_message_id_beeswarm, update_message_id_beeswarm
         
         stats_message = await channel.send(stats_message_content)
         if game_name == "Pet Simulator":
             stats_message_id_ps99 = stats_message.id
-        else:
-            stats_message_id_beeswarm = stats_message.id
             
         await asyncio.sleep(1)
         update_message = await channel.send(update_message_content)
         if game_name == "Pet Simulator":
             update_message_id_ps99 = update_message.id
-        else:
-            update_message_id_beeswarm = update_message.id
 
 @tasks.loop(seconds=13)
 async def check_for_updates():
     global update_message_id_ps99, stats_message_id_ps99
-    global update_message_id_beeswarm, stats_message_id_beeswarm
 
     channel_ps99 = bot.get_channel(CHANNEL_ID_PET_SIM)
     game_data_ps99 = fetch_game_data(API_URL_PET_SIM)
@@ -649,34 +636,6 @@ async def check_for_updates():
                 new_message = await channel_ps99.send(stats_message_content)
                 stats_message_id_ps99 = new_message.id
 
-    channel_beeswarm = bot.get_channel(CHANNEL_ID_BEE_SWARM)
-    game_data_beeswarm = fetch_game_data(API_URL_BEE_SWARM)
-    if game_data_beeswarm:
-        updated_time_str = game_data_beeswarm['updated']
-        new_update_time = datetime.fromisoformat(updated_time_str.replace("Z", "+00:00"))
-        og_player_count = game_data_beeswarm['playing']
-        new_favorite_count = game_data_beeswarm['favoritedCount']
-        new_visit_count = game_data_beeswarm['visits']
-
-        if update_message_id_beeswarm:
-            relative_time, formatted_time = format_discord_timestamp(new_update_time)
-            update_message_content = f"🆕  **Bee Swarm Simulator Update Info**\n⌛ **Last update**: {relative_time}\n📅 **Date**: {formatted_time}"
-            try:
-                message = await channel_beeswarm.fetch_message(update_message_id_beeswarm)
-                await message.edit(content=update_message_content)
-            except discord.NotFound:
-                new_message = await channel_beeswarm.send(update_message_content)
-                update_message_id_beeswarm = new_message.id
-        
-        stats_message_content = f"# Bee Swarm Simulator Stats\n🎮 **Players**: {og_player_count:,}\n⭐ **Favorites**: {new_favorite_count:,}\n➡️ **Visits**: {new_visit_count:,}"
-        if stats_message_id_beeswarm:
-            try:
-                message = await channel_beeswarm.fetch_message(stats_message_id_beeswarm)
-                await message.edit(content=stats_message_content)
-            except discord.NotFound:
-                new_message = await channel_beeswarm.send(stats_message_content)
-                stats_message_id_beeswarm = new_message.id
-
 @tasks.loop(seconds=1)
 async def update_uptime():
     now = datetime.now(timezone.utc)
@@ -698,9 +657,7 @@ async def on_ready():
     update_uptime.start()
     sync_commands.start()
     channel_ps99 = bot.get_channel(CHANNEL_ID_PET_SIM)
-    channel_beeswarm = bot.get_channel(CHANNEL_ID_BEE_SWARM)
     await initial_check(channel_ps99, API_URL_PET_SIM, "Pet Simulator")
-    await initial_check(channel_beeswarm, API_URL_BEE_SWARM, "Bee Swarm Simulator")
     check_for_updates.start()
 
 bot.run(TOKEN)
