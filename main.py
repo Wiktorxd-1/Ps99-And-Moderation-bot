@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import asyncio
 
 TOKEN = 'Your Bot Token ;)' 
-OWNER_ID = 697047593334603837 # Change to your id 
+OWNER_ID = 697047593334603837 # Change to your user id 
 SERVER_ID = 1208706536684130354 # Change to the server your gonna use the bot in (I'ma update the code soon to work better)
 ROLE_ID = 1256972069103734865 # Your staff role 
 
