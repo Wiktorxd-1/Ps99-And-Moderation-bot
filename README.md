@@ -4,7 +4,8 @@
 
 - Python 3.8 or higher
 - `discord.py` library
-- A Discord bot token
+- `requests` libary
+- Discord bot token
 
 ## Installation
 
@@ -13,12 +14,12 @@
  ```bash
    pip install discord.py requests
    ```
-3. Copy the main.py and paste into your editor
+3. Copy the main.py and paste into your editor.
 
 
 ## Configuration
 
-Open the script and update the following variables with the appropriate values:
+Open the script and update the following variables:
 
    ```python
 TOKEN = 'Your Bot Token ;)' 
@@ -44,8 +45,6 @@ ROLE_ID = 1256972069103734865 # Your staff role
 ## Contribution
 
 Feel free to contribute to this project by reporting issues or submitting pull requests.
-
-
 
 
 ---
