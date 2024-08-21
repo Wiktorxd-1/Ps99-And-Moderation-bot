@@ -11,13 +11,13 @@ OWNER_ID = 697047593334603837 # Change to your id,! i need to fix where the owne
 SERVER_ID = 1208706536684130354 # Change to server id the bot is gonna mainly be gonna used in
 ROLE_ID = 1256972069103734865 # Staff role of your server where you gonna use it in (set to None if you dont want it)
 CHANNEL_ID_PET_SIM = 1270334660957700139 # Channel to send the ps99 stats to
-
+ALLOWED_ADMIN_USER_IDS = [None]  # Use , and a space to spearate (set to None if you dont want it)
 
 POINTS_API_URL = 'https://biggamesapi.io/api/clans?page={page}&pageSize=10&sort=Points&sortOrder=desc'
 DIAMONDS_API_URL = 'https://biggamesapi.io/api/clans?page={page}&pageSize=10&sort=DepositedDiamonds&sortOrder=desc'
 API_URL_PET_SIM = f"https://games.roblox.com/v1/games?universeIds=3317771874"
 
-ALLOWED_ADMIN_USER_IDS = [None]  # Use , and a space to spearate (set to None if you dont want it)
+
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=':', intents=intents)
