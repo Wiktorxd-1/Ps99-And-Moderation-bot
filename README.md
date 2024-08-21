@@ -5,6 +5,7 @@
 - Python 3.8 or higher
 - `discord.py` library
 - `requests` libary
+- `aiohttp` libary
 - Discord bot token
 
 ## Installation
@@ -12,7 +13,7 @@
 1. Install Python and Pip if you haven't already.
 2. Download discord.py and requests
  ```bash
-   pip install discord.py requests
+   pip install discord.py requests aiohttp
    ```
 3. Copy the main.py and paste into your editor.
 
@@ -22,10 +23,12 @@
 Open the script and update the following variables:
 
    ```python
-TOKEN = 'Your Bot Token ;)' 
-OWNER_ID = 697047593334603837 # Change to your user id 
-SERVER_ID = 1208706536684130354 # Change to the server your gonna use the bot in (I'ma update the code soon to work better)
-ROLE_ID = 1256972069103734865 # Your staff role 
+TOKEN = 'Your token'
+OWNER_ID = 697047593334603837 # Change to your id,! i need to fix where the owner can use all commands add your id also to ALLOWED_ADMIN_USER_IDS!
+SERVER_ID = 1208706536684130354 # Change to server id the bot is gonna mainly be gonna used in
+ROLE_ID = 1256972069103734865 # Staff role of your server where you gonna use it in (set to None if you dont want it)
+CHANNEL_ID_PET_SIM = 1270334660957700139 # Channel to send the ps99 stats to
+ALLOWED_ADMIN_USER_IDS = [None]  # Use , and a space to spearate (set to None if you dont want it)
    ```
 
 ## Bot Commands
@@ -41,6 +44,8 @@ ROLE_ID = 1256972069103734865 # Your staff role
 - `/ping`: Check the bot's latency.
 - `/avatar [user]`: Get the avatar of a specified user or yourself.
 - `/best-clans <points|diamonds>`: Display the top clans based on points or diamonds.
+- `/clan-info [clan name]`: Get Clan Information.
+- `/admin-perm-check`: Check if you can use admin commands.
 
 ## Contribution
 
